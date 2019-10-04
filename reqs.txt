@@ -1,4 +1,3 @@
 pygelf
 requests
 adal
-binascii

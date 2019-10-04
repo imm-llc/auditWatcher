@@ -31,9 +31,10 @@ pipeline{
                 ){
                     script{
                         sh '''
-                            cp $keyFile ./key.key 
-                            ls -l
-                            rm -f ./key.key
+                            cp $keyFile ./key.key
+                            cp $configFile ./conf.json
+                            chmod +x logs.py
+                            ./logs.py conf.json
                         '''
                     }
                 }
@@ -43,7 +44,10 @@ pipeline{
     }
     post{
         always{
-            echo "========always========"
+            sh '''
+            rm -f ./key.key
+            rm -f ./conf.json
+            '''
         }
         success{
             echo "========pipeline executed successfully ========"

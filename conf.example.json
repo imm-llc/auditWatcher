@@ -1,0 +1,12 @@
+{
+    "tenant_id": "xxx-xxx-111-z1z1-xxxxxxxx",
+    "api_key": "some gross string",
+    "client_id": "yyy-yyyy-yyyy-yyy",
+    "private_key": "key.key",
+    "public_key_fingerprint": "16:28:E4:1D:33:73:85:32:BB:56:A5:EF:55:0B:7A:12:DA:F6:A9:18",
+    "subscriptions": [
+        "Audit.AzureActiveDirectory"
+    ],
+    "graylog_ip": "172.28.253.58",
+    "graylog_port": "15823"
+}

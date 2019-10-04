@@ -1,0 +1,4 @@
+pygelf
+requests
+adal
+binascii

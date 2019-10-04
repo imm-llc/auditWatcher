@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import adal
 import json
 import binascii

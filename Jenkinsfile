@@ -1,6 +1,10 @@
 pipeline{
     agent any
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '3'))
+    }
+
     triggers {
         cron('*/15 * * * *')
     }
@@ -27,7 +31,9 @@ pipeline{
                 ){
                     script{
                         sh '''
+                            cp $keyFile ./key.key 
                             ls -l
+                            rm -f ./key.key
                         '''
                     }
                 }

@@ -8,5 +8,5 @@
         "Audit.AzureActiveDirectory"
     ],
     "graylog_ip": "172.28.253.58",
-    "graylog_port": "15823"
+    "graylog_port": 15823
 }

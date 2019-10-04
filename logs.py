@@ -23,8 +23,9 @@ class Main:
 
     def init_logger(self):
         logging.basicConfig(level=logging.INFO)
-        logger = logging.getLogger()
-        logger.addHandler(GelfUdpHandler(host=self.config_json['graylog_ip'], port=self.config_json['graylog_port']))
+        self.logger = logging.getLogger()
+        handler = GelfUdpHandler(host=self.config_json['graylog_ip'], port=self.config_json['graylog_port'], _app="auditwatch")
+        self.logger.addHandler(handler)
 
     def init_auth(self):
 
@@ -110,13 +111,13 @@ class Main:
         j = json.loads(r.text)
 
         for i in j:
-            print(i)
-
+            self.logger.info(json.dumps(i))
 
 
 if __name__ == "__main__": 
     m = Main()
     m.read_config()
+    m.init_logger()
     m.init_auth()
     m.list_current_subcriptions()
     m.get_available_content()

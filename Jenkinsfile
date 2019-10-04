@@ -11,7 +11,7 @@ pipeline{
                 script{
                     echo "**********************************************"
                     echo ""
-                    sh "pip3 install --user -r reqs.txt"
+                    sh "/usr/local/bin/pip3 install --user -r reqs.txt"
                     echo ""
                     echo "**********************************************"
                 }

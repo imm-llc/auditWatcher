@@ -6,6 +6,7 @@ import logging
 from time import sleep
 from pygelf import GelfTcpHandler, GelfUdpHandler, GelfTlsHandler, GelfHttpHandler
 from sys import argv, exit
+from datetime import datetime, timedelta
 
 class Main:
 
@@ -89,12 +90,30 @@ class Main:
             "Authorization": "Bearer {}".format(str(self.access_token))
         }
 
+        delta = timedelta(minutes=15)
+        now = datetime.utcnow()
+        start = now - delta
+
+        start_time = start.strftime("%Y-%m-%dT%H:%M") #"2018-07-16T19:00"
+        end_time = now.strftime("%Y-%m-%dT%H:%M") #"2018-07-16T23:00"
+
+        print(f"Checking between {start_time} and {end_time} UTC")
+
+
         for s in self.config_json['subscriptions']:
 
             try:
-                r = requests.get(f"https://manage.office.com/api/v1.0/{self.config_json['tenant_id']}/activity/feed/subscriptions/content?contentType={s}", headers=h)
+                r = requests.get(f"https://manage.office.com/api/v1.0/{self.config_json['tenant_id']}/activity/feed/subscriptions/content?contentType={s}&startTime={start_time}&endTime={end_time}", headers=h)
                 print(f"\n\nStatus code retrieving available {s} events: {r.status_code}")
-                for i in json.loads(r.text):
+                if r.status_code != 200:
+                    print(r.text)
+                    exit(1)
+                j = json.loads(r.text)
+                if len(j) < 1:
+                    self.logger.warning("No events to retrieve")
+                    exit(2)
+                print(f"{len(j)} events to process")
+                for i in j:
                     self.poll_audit(i['contentUri'])
 
             except Exception as e:

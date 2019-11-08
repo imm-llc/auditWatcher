@@ -112,7 +112,7 @@ class Main:
                 j = json.loads(r.text)
                 if len(j) < 1:
                     self.logger.warning("No events to retrieve")
-                    exit(2)
+                    exit(0)
                 print(f"{len(j)} events to process")
                 for i in j:
                     self.poll_audit(i['contentUri'])
